@@ -13,11 +13,12 @@ I made this because I plan to use wxWidgets in future projects and am already us
 <h2><b>Commands:</b></h2>
 <b>Compiling into .dll library:</b>
 <pre><code>g++ -c -m32 -D_WIN32_WINNT=0x0400 -DWINVER=0x0400 inputlib.cpp -o inputlib.o
-g++ -shared -m32 -D_WIN32_WINNT=0x0400 -DWINVER=0x0400 -static-libgcc -static-libstdc++ -Wl,--out-implib,libkeyinput.a -o inputlib.dll inputlib.o -luser32 -lkernel32
+g++ -shared -m32 -D_WIN32_WINNT=0x0400 -DWINVER=0x0400 -DUNICODE=0 -static-libgcc -Wl,--out-implib,inputlib.a -o inputlib.dll inputlib.o -luser32 -lkernel32
 </code></pre>
 <b>Outputs: inputlib.dll, inputlib.a</b>
 <b>Compiling as .exe (along with other program files)</b>
-<pre><code>g++ -m32 -D_WIN32_WINNT=0x0400 -DWINVER=0x0400 main.cpp -L. -inputlib -luser32 -lkernel32 -static-libgcc -static-libstdc++ -o main.exe</code></pre>
+<pre><code>g++ -m32 -D_WIN32_WINNT=0x0400 -DWINVER=0x0400 -DUNICODE=0 main.cpp -inputlib -luser32 -lkernel32 -static-libgcc -o main.exe</code></pre>
+<b>For other ways to compile, follow x32/x86 architecture, low minimum OS requirements, NO UNICODE, preferred static linking over dynamic</b>
 
 # Supported OSes
 <b>Supports all versions of Windows, from Windows 95 up to Windows 11:</b>
