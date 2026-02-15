@@ -57,6 +57,6 @@ g++ -shared -m32 -D_WIN32_WINNT=0x0400 -DWINVER=0x0400 -DUNICODE=0 -static-libgc
     (probable future desktop OS from Microsoft)
 
 # Author
-Original link here: <a href=https://github.com/wxWidgets/wxWidgets/releases/tag/v2.8.8>https://github.com/wxWidgets/wxWidgets/releases/tag/v2.8.8</a>
+Made on February 14th, 2026, by C0m3b4ck.
 
 
