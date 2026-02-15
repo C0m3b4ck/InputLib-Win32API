@@ -1,53 +1,23 @@
 
-<a href=https://github.com/C0m3b4ck/wxWidgets-Win9x-to-Win11/blob/main/README_PL.md>🇵🇱🇵🇱🇵🇱🇵🇱🇵🇱POLSKA WERSJA🇵🇱🇵🇱🇵🇱🇵🇱🇵🇱🇵🇱</a>
-<br>![GitHub All Releases](https://img.shields.io/github/downloads/C0m3b4ck/wxWidgets-Win9x-to-Win11/total)
+<a href=https://github.com/C0m3b4ck/InputLib-Win32API/blob/main/README_PL.md>🇵🇱🇵🇱🇵🇱🇵🇱🇵🇱POLSKA WERSJA🇵🇱🇵🇱🇵🇱🇵🇱🇵🇱🇵🇱</a>
+<br>![GitHub All Releases](https://img.shields.io/github/downloads/C0m3b4ck/InputLib-Win32API/total)
 <br><b>🇪🇺🇪🇺🇪🇺Made in Europe🇪🇺🇪🇺🇪🇺
 # InputLib-Win32API
 A more programmer-friendly library for key input using Win32API, with Win95-Win11 support.
 I made this because I plan to use wxWidgets in future projects and am already using it in <a href=https://github.com/C0m3b4ck/SquishyRat>SquishyRat</a>.
 # Instructions
 <h2><b>Required:</b></h2>
-<pre><code>DevC++ 5.11 with TDM GCC 4.7.3 (GCC needs to be below 4.9)</code></pre>
+<pre><code>A C++ IDE, I use DevC++ 5.11 with TDM GCC 4.7.3 (GCC needs to be below 4.9)</code></pre>
 <pre><code>OPTIONAL: after installation, register DevCPP\MinGW\Bin to PATH</code></pre>
 
 <h2><b>Commands:</b></h2>
-<h3>Step 1: Navigate to correct directory</h3>
-<p>Go to <code>wxwidgets-folder-name\build\msw</code></p>
-
-<h3>Step 2: Open build/msw/makefile.gcc</h3>
-<p>Search for <i>"%(MONOLIB_OBJECTS)"</i> until you find this snippet: </p>
-<pre><code>
-ifeq ($(MONOLITHIC),1)
-ifeq ($(SHARED),0)
-$(LIBDIRNAME)\libwx$(PORTNAME)$(WXUNIVNAME)$(WX_RELEASE_NODOT)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR).a: $(MONOLIB_OBJECTS)
-	if exist $@ del $@
-	ar rcu $@ $(MONOLIB_OBJECTS)
-	ranlib $@
-endif
-endif</code></pre>
-<p>Replace it with this: </p>
-<pre><code>
-ifeq ($(MONOLITHIC),1)
-ifeq ($(SHARED),0)
-$(LIBDIRNAME)\libwx$(PORTNAME)$(WXUNIVNAME)$(WX_RELEASE_NODOT)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR).a: $(MONOLIB_OBJECTS)
-	if exist $@ del $@
-    echo $(MONOLIB_OBJECTS) > objects.rsp
-    ar rcu $@ @objects.rsp
-    ranlib $@
-    del objects.rsp
-endif
+<b>Compiling into .dll library:</b>
+<pre><code>g++ -c -m32 -D_WIN32_WINNT=0x0400 -DWINVER=0x0400 inputlib.cpp -o inputlib.o
+g++ -shared -m32 -D_WIN32_WINNT=0x0400 -DWINVER=0x0400 -static-libgcc -static-libstdc++ -Wl,--out-implib,libkeyinput.a -o inputlib.dll inputlib.o -luser32 -lkernel32
 </code></pre>
-<p>For reference, the added/replaced/removed lines were:</p> 
-<b>Added:</b>
-<pre><code>echo $(MONOLIB_OBJECTS) > objects.rsp </code></pre>
-<pre><code>del objects.rsp </span></code></pre>
-<b>Replaced: </b>
-<pre><code>ar rcu $@ @objects.rsp </code></pre> <b>is a replacement for</b> <pre><code>ar rcu $@ $(MONOLIB_OBJECTS)</code></pre>
-<b>Removed: </b>
-<pre><code>endif </code></pre>
-
-<h3>Step 4: Build</h3>
-<pre><code>mingw32-make -f makefile.gcc BUILD=release SHELL=CMD.exe SHARED=1 UNICODE=0 MONOLITHIC=0 CXXFLAGS="-fpermissive"</code></pre>
+<b>Outputs: inputlib.dll, inputlib.a</b>
+<b>Compiling as .exe (along with other program files)</b>
+<pre><code>g++ -m32 -D_WIN32_WINNT=0x0400 -DWINVER=0x0400 main.cpp -L. -inputlib -luser32 -lkernel32 -static-libgcc -static-libstdc++ -o main.exe</code></pre>
 
 # Supported OSes
 <b>Supports all versions of Windows, from Windows 95 up to Windows 11:</b>
